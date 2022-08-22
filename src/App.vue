@@ -19,7 +19,6 @@
         <li>{{ serie.vote_average }}</li>
       </ul>
     </section>
-   
   </div>
 </template>
  
@@ -31,7 +30,7 @@ export default {
   data() {
     return {
       movies: [],
-      series:[],
+      series: [],
       api: {
         language: "it",
         key: "fc1383bffc985a009aa4698df58ddc3e",
@@ -41,9 +40,9 @@ export default {
   },
   methods: {
     startSearch(query) {
-      const { language, key, baseUri } = this.api;
-      
-       const config = {
+      const { language, key } = this.api;
+
+      const config = {
         params: {
           api_key: key,
           language: language,
@@ -51,19 +50,16 @@ export default {
         },
       };
 
-      axios.get(`${baseUri}/search/movie`, config).then((res) => {
-        this.movies = res.data.results;
-      });
-      axios.get(`${baseUri}/search/tv`, config).then((res) => {
-        this.series = res.data.results;
-      });
-
-      
-
-
-     
+      this.fetchData("/search/movies", config);
+      this.fetchData("/search/tv", config);
     },
-  }, 
+
+    fetchData(endpoint, config, target) {
+      axios.get(`${this.api.baseUri}${endpoint}`, config).then((res) => {
+        this[target] = res.data.results;
+      });
+    },
+  },
 };
 </script>
 
