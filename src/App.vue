@@ -41,25 +41,26 @@ export default {
   },
   methods: {
     startSearch(query) {
-      const { language, key} = this.api;
+      const { language, key, baseUri } = this.api;
       
        const config = {
         params: {
           api_key: key,
-          language,
-          query,
+          language: language,
+          query: query,
         },
       };
 
-this.fetchData('/search/movie',config, 'movies');
-this.fetchData('/search/tv', config, 'series');
-    
-    fetchData(endpoint, config, target)
-     {axios.get(`${this.api.baseUri}${endpoint}`, config).then((res) => {
-        this[target] = res.data.results;
+      axios.get(`${baseUri}/search/movie`, config).then((res) => {
+        this.movies = res.data.results;
+      });
+      axios.get(`${baseUri}/search/tv`, config).then((res) => {
+        this.series = res.data.results;
       });
 
-}
+      
+
+
      
     },
   }, 
