@@ -50,8 +50,8 @@ export default {
         },
       };
 
-      this.fetchData("/search/movies", config);
-      this.fetchData("/search/tv", config);
+      this.fetchData("/search/movie", config,'movies');
+      this.fetchData("/search/tv", config,'series');
     },
 
     fetchData(endpoint, config, target) {
